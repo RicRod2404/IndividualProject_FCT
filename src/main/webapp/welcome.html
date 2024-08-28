@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Design template found at https://www.bootstrapdash.com/product/simple-landing-page -->
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>Welcome Page</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="favicon.png" rel="icon" type="image/png"/>
+    <link href="style.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+    <style>
+        #role-content li {
+            list-style-position: inside;
+        }
+    </style>
+</head>
+
+<body class="" data-aos-delay="0" data-aos-duration="1200" data-aos-easing="ease" data-offset="100"
+      data-spy="scroll" data-target=".navbar" id="body">
+<!-- header, same for all pages but can change a bit -->
+<header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar" style="padding: 15px 0 25px">
+        <div class="container">
+            <div class="navbar-brand-wrapper d-flex" style="width:50%">
+                <img alt="" src="nova-logo.png" style="width:15%">
+            </div>
+            <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create-user.html">Create User</a>
+                    </li>
+                    <li class="nav-item" style="width: 124px">
+                        <a class="nav-link" href="show-token.html">Show Token</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="lnk-login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" id="lnk-logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- main part, will change per operation -->
+<div class="banner">
+    <div class="container">
+        <h1 class="font-weight-semibold">Welcome to my project!</h1>
+        <br>
+        <h6 class="font-weight-normal text-muted pb-3">These are the operations you are able to do as a: </h6>
+        <ul class="font-weight-normal text-muted pb-3" id="role-content"></ul>
+        <br>
+        <br>
+    </div>
+</div>
+<!-- footer, same for all pages -->
+<div class="content-wrapper" style="padding: 27px 0 0 0">
+    <div class="container">
+        <!-- footer row 1 -->
+        <section class="contact-details" id="contact-details-section">
+            <div class="row text-center text-md-left">
+                <div class="col-12 col-md-6 col-lg-2">
+                    <img alt="" class="pb-2" src="nova-logo.png" style="width: 55%">
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Student</h5>
+                    <p class="text-muted">rp.rodrigues@campus.fct.unl.pt</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Course</h5>
+                    <p class="text-muted">B.Sc. Computer Science</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Study</h5>
+                    <p class="text-muted">ADC - Individual Project</p>
+                </div>
+            </div>
+        </section>
+        <!-- footer row 2 -->
+        <footer class="border-top">
+            <div class="d-flex justify-content-between">
+                <p class="text-center text-muted pt-4">Copyright © 2024, All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="common.js"></script>
+<script type="text/javascript">
+    toastr.success("Logged in successfully!");
+
+    let token = localStorage.getItem("token");
+
+    if (token == null) {
+        document.getElementById("lnk-logout").hidden = true;
+        document.getElementById("lnk-login").hidden = false;
+    } else {
+        document.getElementById("lnk-login").hidden = true;
+        document.getElementById("lnk-logout").hidden = false;
+    }
+
+    let atobToken = atob(token.substring(4));
+    token = JSON.parse(atobToken);
+
+    let role = token.role;
+
+    let roleDescription = document.querySelector('.font-weight-normal.text-muted.pb-3');
+    roleDescription.innerHTML += ` ${role}`;
+
+    let roleContent = document.getElementById("role-content");
+
+    if (role === "SU") {
+        roleContent.innerHTML = "<li>You can change the role of any user of choice</li>" +
+            "<li>You can change the account status of any user of choice</li>" +
+            "<li>You can delete any account of choice</li>" +
+            "<li>You can list all attributes of every user registered in my project</li>" +
+            "<li>You can modify all attributes, except the username, of all users with lower access rights</li>" +
+            "<li>You can modify your own password</li>" +
+            "<li>You can visualize your token and its expiry date</li>";
+    } else if (role === "GA") {
+        roleContent.innerHTML = "<li>You can change the role of any USER to GBO and vice versa</li>" +
+            "<li>You can change the account status of any USER or GBO of choice</li>" +
+            "<li>You can delete any USER or GBO account of choice</li>" +
+            "<li>You can list all attributes of every USER, GBO or GA registered in my project</li>" +
+            "<li>You can modify all attributes, except the username, of all users with lower access rights</li>" +
+            "<li>You can modify your own password</li>" +
+            "<li>You can visualize your token and its expiry date</li>";
+    } else if (role === "GBO") {
+        roleContent.innerHTML = "<li>You can change the account status of any USER of choice</li>" +
+            "<li>You can list all attributes of every USER registered in my project</li>" +
+            "<li>You can modify all attributes, except the username, of all users with lower access rights</li>" +
+            "<li>You can modify your own password</li>" +
+            "<li>You can visualize your token and its expiry date</li>";
+    } else {
+        roleContent.innerHTML = "<li>You can delete your own account</li>" +
+            "<li>You can list a few attributes of every USER with a public and active account registered in my project</li>" +
+            "<li>You can modify some attributes of your account</li>" +
+            "<li>You can modify your own password</li>" +
+            "<li>You can visualize your token and its expiry date</li>";
+    }
+</script>
+</body>
+</html>

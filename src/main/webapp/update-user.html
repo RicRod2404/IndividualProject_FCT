@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Design template found at https://www.bootstrapdash.com/product/simple-landing-page -->
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>Update User</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="favicon.png" rel="icon" type="image/png"/>
+    <link href="style.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+</head>
+
+<body class="" data-aos-delay="0" data-aos-duration="1200" data-aos-easing="ease" data-offset="100"
+      data-spy="scroll" data-target=".navbar" id="body">
+<!-- header, same for all pages but can change a bit -->
+<header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar" style="padding: 15px 0 25px">
+        <div class="container">
+            <div class="navbar-brand-wrapper d-flex" style="width:50%">
+                <img alt="" src="nova-logo.png" style="width:15%">
+            </div>
+            <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create-user.html">Create User</a>
+                    </li>
+                    <li class="nav-item" style="width: 124px">
+                        <a class="nav-link" href="show-token.html">Show Token</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" id="lnk-logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- main part, will change per operation -->
+<div class="banner">
+    <div class="container">
+        <h1 class="font-weight-semibold">Update User</h1>
+        <br>
+        <div>
+            <a href="change-role.html">
+                <button class="btn btn-opacity-warning mr-1">Change Role</button>
+            </a>
+            <a href="change-status.html">
+                <button class="btn btn-opacity-warning ml-1">Change Status</button>
+            </a>
+            <a href="change-password.html">
+                <button class="btn btn-opacity-warning ml-1">Change
+                    Password
+                </button>
+            </a>
+            <a href="list-users.html">
+                <button class="btn btn-opacity-info ml-1">Registered Users</button>
+            </a>
+            <a href="delete-user.html">
+                <button class="btn btn-opacity-light ml-1">Delete User</button>
+            </a>
+        </div>
+        <br>
+        <div class="container">
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        &nbsp;
+                    </div>
+                    <div class="col-3">
+                        <label for="username">Username:</label>
+                    </div>
+                    <div class="col-3">
+                        <input id="username" name="username" type="text">
+                    </div>
+                    <div class="col-3">
+                        <button id="btn-usrn" type="submit">Get User Info</button>
+                    </div>
+                </div>
+                <br>
+                <form action="" id="frm-user">
+                    <hr>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="email">Email:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="email" name="email" type="email">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="name" name="name" type="text">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="phoneNr">Phone number:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="phoneNr" name="phoneNr" pattern="^\+?\d{9,15}$"
+                                   title="Phone number must be between 9 to 15 digits and may start with a +"
+                                   type="tel">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="occupation">Occupation:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="occupation" name="occupation" type="text">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="workingPlace">Working place:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="workingPlace" name="workingPlace" type="text">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="address">Address:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="address" name="address" type="text">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="zipCode">Zip Code:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="zipCode" name="zipCode" type="text">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="nif">NIF:</label>
+                        </div>
+                        <div class="col-3">
+                            <input id="nif" name="nif" type="text">
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="pfStatus">Profile Status:</label>
+                        </div>
+                        <div class="col-3">
+                            <select id="pfStatus" name="pfStatus" style="width: 303px;">
+                                <option value="">Select a new profile status</option>
+                                <option value="PRIVATE">PRIVATE</option>
+                                <option value="PUBLIC">PUBLIC</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="newStatus">Account Status:</label>
+                        </div>
+                        <div class="col-3">
+                            <select id="newStatus" name="newStatus" style="width: 303px;">
+                                <option value="">Select a new account status</option>
+                                <option value="ACTIVE">ACTIVE</option>
+                                <option value="INACTIVE">INACTIVE</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-3">
+                            <label for="newRole">Role:</label>
+                        </div>
+                        <div class="col-3">
+                            <select id="newRole" name="newRole" style="width: 303px;">
+                                <option value="">Select a new role</option>
+                                <option value="GA">GA</option>
+                                <option value="GBO">GBO</option>
+                                <option value="SU">SU</option>
+                                <option value="USER">USER</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <br>
+                    <button id="btn-sub" type="submit">Update Account</button>
+                </form>
+            </div>
+            <br>
+            <br>
+        </div>
+        <br>
+        <br>
+    </div>
+</div>
+<!-- footer, same for all pages -->
+<div class="content-wrapper" style="padding: 27px 0 0 0">
+    <div class="container">
+        <!-- footer row 1 -->
+        <section class="contact-details" id="contact-details-section">
+            <div class="row text-center text-md-left">
+                <div class="col-12 col-md-6 col-lg-2">
+                    <img alt="" class="pb-2" src="nova-logo.png" style="width: 55%">
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Student</h5>
+                    <p class="text-muted">rp.rodrigues@campus.fct.unl.pt</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Course</h5>
+                    <p class="text-muted">B.Sc. Computer Science</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Study</h5>
+                    <p class="text-muted">ADC - Individual Project</p>
+                </div>
+            </div>
+        </section>
+        <!-- footer row 2 -->
+        <footer class="border-top">
+            <div class="d-flex justify-content-between">
+                <p class="text-center text-muted pt-4">Copyright © 2024, All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="common.js"></script>
+<script src="commonC_U.js"></script>
+<script type="text/javascript">
+    let btnUsrn = document.getElementById("btn-usrn");
+    let form = document.getElementById("frm-user");
+
+    btnUsrn.addEventListener("click", function (e) {
+        e.preventDefault();
+        let targetUsername = document.getElementById("username").value;
+
+        let payload = {
+            username: targetUsername
+        };
+
+        let headers = {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        };
+
+        fetch(SERVER_URL + "/api/user/get", {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(payload)
+        })
+            .then(response => response.json())
+            .then(data => {
+                const user = typeof data === 'string' ? JSON.parse(data) : data;
+                document.getElementById("email").value = user.Email;
+                document.getElementById("name").value = user.Name;
+                document.getElementById("phoneNr").value = user.PhoneNumber;
+                document.getElementById("occupation").value = user.Occupation;
+                document.getElementById("workingPlace").value = user.WorkingPlace;
+                document.getElementById("address").value = user.Address;
+                document.getElementById("zipCode").value = user.ZipCode;
+                document.getElementById("nif").value = user.NIF;
+                document.getElementById("pfStatus").value = user.ProfileStatus;
+                document.getElementById("newRole").value = user.Role;
+                document.getElementById("newStatus").value = user.AccountStatus;
+            })
+    });
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        let token = localStorage.getItem("token");
+        let atobToken = atob(token.substring(4));
+        token = JSON.parse(atobToken);
+
+        if (!validateEmail(document.getElementById("email").value)) {
+            toastr.warning("Invalid email address!");
+            return;
+        }
+
+        if (!validatePhoneNr(document.getElementById("phoneNr").value)) {
+            toastr.warning("Phone number must be between 9 to 15 digits and may start with a +");
+            return;
+        }
+
+        let zipCode = document.getElementById("zipCode").value;
+        if (zipCode !== "" && !validateZipCode(zipCode)) {
+            toastr.warning("Zip code must be in the format XXXX-XXX");
+            return;
+        }
+
+        let nif = document.getElementById("nif").value;
+        if (nif !== "" && !validateNif(nif)) {
+            toastr.warning("NIF must have 9 digits");
+            return;
+        }
+
+        let data = {
+            usernameToChange: document.getElementById("username").value,
+            email: document.getElementById("email").value,
+            name: document.getElementById("name").value,
+            phoneNr: document.getElementById("phoneNr").value,
+            occupation: document.getElementById("occupation").value,
+            workingPlace: document.getElementById("workingPlace").value,
+            address: document.getElementById("address").value,
+            zipCode: document.getElementById("zipCode").value,
+            nif: document.getElementById("nif").value,
+            pfStatus: document.getElementById("pfStatus").value,
+            role: document.getElementById("newRole").value,
+            accStatus: document.getElementById("newStatus").value
+        };
+
+        let headers = {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        };
+
+        fetch(SERVER_URL + "/api/user/update", {
+            method: "PUT",
+            headers: headers,
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    toastr.success("User changed successfully!");
+                } else {
+                    toastr.error("User change failed!");
+                }
+            })
+    });
+</script>
+</body>
+</html>

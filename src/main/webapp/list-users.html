@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Design template found at https://www.bootstrapdash.com/product/simple-landing-page -->
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>List Users</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="favicon.png" rel="icon" type="image/png"/>
+    <link href="style.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+</head>
+
+<body class="" data-aos-delay="0" data-aos-duration="1200" data-aos-easing="ease" data-offset="100"
+      data-spy="scroll" data-target=".navbar" id="body">
+<!-- header, same for all pages but can change a bit -->
+<header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar" style="padding: 15px 0 25px">
+        <div class="container">
+            <div class="navbar-brand-wrapper d-flex" style="width:50%">
+                <img alt="" src="nova-logo.png" style="width:15%">
+            </div>
+            <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create-user.html">Create User</a>
+                    </li>
+                    <li class="nav-item" style="width: 124px">
+                        <a class="nav-link" href="show-token.html">Show Token</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" id="lnk-logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- main part, will change per operation -->
+<div class="banner">
+    <div class="container">
+        <h1 class="font-weight-semibold">Registered Users</h1>
+        <br>
+        <div>
+            <a href="change-role.html">
+                <button class="btn btn-opacity-warning mr-1">Change Role</button>
+            </a>
+            <a href="change-status.html">
+                <button class="btn btn-opacity-warning ml-1">Change Status</button>
+            </a>
+            <a href="change-password.html">
+                <button class="btn btn-opacity-warning ml-1">Change
+                    Password
+                </button>
+            </a>
+            <a href="update-user.html">
+                <button class="btn btn-opacity-info ml-1">Update User</button>
+            </a>
+            <a href="delete-user.html">
+                <button class="btn btn-opacity-light ml-1">Delete User</button>
+            </a>
+        </div>
+        <br>
+        <input id="searchUsrn" placeholder="Search by username" type="text">
+        &nbsp;&nbsp;&nbsp;
+        <input id="searchEmail" placeholder="Search by email" type="text">
+        &nbsp;&nbsp;&nbsp;
+        <input id="searchName" placeholder="Search by name" type="text">
+        <hr>
+        <div class="container" id="user-list">
+            <!-- User details will be appended here -->
+        </div>
+        <br>
+        <br>
+    </div>
+</div>
+<!-- footer, same for all pages -->
+<div class="content-wrapper" style="padding: 27px 0 0 0">
+    <div class="container">
+        <!-- footer row 1 -->
+        <section class="contact-details" id="contact-details-section">
+            <div class="row text-center text-md-left">
+                <div class="col-12 col-md-6 col-lg-2">
+                    <img alt="" class="pb-2" src="nova-logo.png" style="width: 55%">
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Student</h5>
+                    <p class="text-muted">rp.rodrigues@campus.fct.unl.pt</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Course</h5>
+                    <p class="text-muted">B.Sc. Computer Science</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Study</h5>
+                    <p class="text-muted">ADC - Individual Project</p>
+                </div>
+            </div>
+        </section>
+        <!-- footer row 2 -->
+        <footer class="border-top">
+            <div class="d-flex justify-content-between">
+                <p class="text-center text-muted pt-4">Copyright © 2024, All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="common.js"></script>
+<script type="text/javascript">
+    let token = localStorage.getItem("token");
+    let atobToken = atob(token.substring(4));
+    token = JSON.parse(atobToken);
+
+    let role = token.role;
+
+    let headers = {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    };
+
+    fetch(SERVER_URL + "/api/user/list", {
+        method: "POST",
+        headers: headers,
+    })
+        .then(response => response.json()) // Parse the response as JSON
+        .then(data => {
+            const users = typeof data === 'string' ? JSON.parse(data) : data;
+            if (Array.isArray(users)) {
+                const userListContainer = document.getElementById('user-list');
+                if (role === "USER") {
+                    // Clear existing content
+                    userListContainer.innerHTML = `
+            <div class="row" style="margin-bottom: 5px">
+                <div class="col-4"><strong>Username</strong></div>
+                <div class="col-4"><strong>Email</strong></div>
+                <div class="col-4"><strong>Name</strong></div>
+            </div>`;
+
+                    // Dynamically create a row for each user and append it
+                    users.forEach(user => {
+                        const userRow = document.createElement('div');
+                        userRow.classList.add('row');
+                        userRow.innerHTML = `
+                <div class="col-4">${user.Username}</div>
+                <div class="col-4">${user.Email}</div>
+                <div class="col-4">${user.Name}</div>
+            `;
+                        userListContainer.appendChild(userRow);
+                    });
+                } else {
+                    // Clear existing content
+                    userListContainer.innerHTML = `
+            <div class="row" style="margin-bottom: 5px">
+                <div class="col-1"><strong>Username</strong></div>
+                <div class="col-1"><strong>Email</strong></div>
+                <div class="col-1"><strong>Role</strong></div>
+                <div class="col-1"><strong>Name</strong></div>
+                <div class="col-1"><strong>Phone Number</strong></div>
+                <div class="col-1"><strong>Account Status</strong></div>
+                <div class="col-1"><strong>Profile Status</strong></div>
+                <div class="col-1"><strong>Address</strong></div>
+                <div class="col-1"><strong>Working Place</strong></div>
+                <div class="col-1"><strong>Occupation</strong></div>
+                <div class="col-1"><strong>NIF</strong></div>
+                <div class="col-1"><strong>Zip Code</strong></div>
+            </div>`;
+
+                    // Dynamically create a row for each user and append it
+                    users.forEach(user => {
+                        const userRow = document.createElement('div');
+                        userRow.classList.add('row');
+                        userRow.innerHTML = `
+                <div class="col-1">${user.Username}</div>
+                <div class="col-1">${user.Email}</div>
+                <div class="col-1">${user.Role}</div>
+                <div class="col-1">${user.Name}</div>
+                <div class="col-1">${user.PhoneNumber}</div>
+                <div class="col-1">${user.AccountStatus}</div>
+                <div class="col-1">${user.ProfileStatus}</div>
+                <div class="col-1">${user.Address}</div>
+                <div class="col-1">${user.WorkingPlace}</div>
+                <div class="col-1">${user.Occupation}</div>
+                <div class="col-1">${user.NIF}</div>
+                <div class="col-1">${user.ZipCode}</div>
+            `;
+                        userListContainer.appendChild(userRow);
+                    });
+                }
+            } else {
+                toastr.error("Listing users failed!");
+            }
+        })
+
+    document.getElementById('searchUsrn').addEventListener('input', function () {
+        let searchText = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#user-list .row');
+
+        // Start from the first index, skipping the header row
+        for (let i = 1; i < rows.length; i++) {
+            let row = rows[i];
+            let userName = row.children[0].textContent.toLowerCase();
+            if (userName.includes(searchText)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+
+    document.getElementById('searchEmail').addEventListener('input', function () {
+        let searchText = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#user-list .row');
+
+        // Start from the first index, skipping the header row
+        for (let i = 1; i < rows.length; i++) {
+            let row = rows[i];
+            let email = row.children[1].textContent.toLowerCase();
+            if (email.includes(searchText)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+
+    document.getElementById('searchName').addEventListener('input', function () {
+        let searchText = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#user-list .row');
+
+        // Start from the first index, skipping the header row
+        for (let i = 1; i < rows.length; i++) {
+            let row = rows[i];
+            let name = row.children[3].textContent.toLowerCase();
+            if (name.includes(searchText)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Design template found at https://www.bootstrapdash.com/product/simple-landing-page -->
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>APDC-63155</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="favicon.png" rel="icon" type="image/png"/>
+    <link href="style.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+</head>
+
+<body class="" data-aos-delay="0" data-aos-duration="1200" data-aos-easing="ease" data-offset="100"
+      data-spy="scroll" data-target=".navbar" id="body">
+<!-- header, same for all pages but can change a bit -->
+<header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar" style="padding: 15px 0 25px">
+        <div class="container">
+            <div class="navbar-brand-wrapper d-flex" style="width:50%">
+                <img alt="" src="nova-logo.png" style="width:15%">
+            </div>
+            <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create-user.html">Create User</a>
+                    </li>
+                    <li class="nav-item" style="width: 124px">
+                        <a class="nav-link" href="show-token.html">Show Token</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="lnk-login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="lnk-logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- main part, will change per operation -->
+<div class="banner">
+    <div class="container">
+        <h1 class="font-weight-semibold">ADC - Projeto | Edição 2023/24</h1>
+        <h6 class="font-weight-normal text-muted pb-3">Desenvolvimento, teste e demonstração de uma pequena
+            aplicação Web.</h6>
+        <div>
+            <button class="btn btn-opacity-warning mr-1" onclick="hasAccessTo('change-role.html')">Change Role</button>
+            <button class="btn btn-opacity-warning ml-1" onclick="hasAccessTo('change-status.html')">Change Status
+            </button>
+            <button class="btn btn-opacity-warning ml-1" onclick="hasAccessTo('change-password.html')">Change
+                Password
+            </button>
+            <button class="btn btn-opacity-info ml-1" onclick="hasAccessTo('list-users.html')">Registered Users</button>
+            <button class="btn btn-opacity-info ml-1" onclick="hasAccessTo('update-user.html')">Update User</button>
+            <button class="btn btn-opacity-light ml-1" onclick="hasAccessTo('delete-user.html')">Delete User</button>
+        </div>
+        <br>
+        <img alt="" class="img-fluid" src="group.svg" style="width:25%">
+        <br>
+        <br>
+    </div>
+</div>
+<!-- footer, same for all pages -->
+<div class="content-wrapper" style="padding: 27px 0 0 0">
+    <div class="container">
+        <!-- footer row 1 -->
+        <section class="contact-details" id="contact-details-section">
+            <div class="row text-center text-md-left">
+                <div class="col-12 col-md-6 col-lg-2">
+                    <img alt="" class="pb-2" src="nova-logo.png" style="width: 55%">
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Student</h5>
+                    <p class="text-muted">rp.rodrigues@campus.fct.unl.pt</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5>Course</h5>
+                    <p class="text-muted">B.Sc. Computer Science</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h5>Study</h5>
+                    <p class="text-muted">ADC - Individual Project</p>
+                </div>
+            </div>
+        </section>
+        <!-- footer row 2 -->
+        <footer class="border-top">
+            <div class="d-flex justify-content-between">
+                <p class="text-center text-muted pt-4">Copyright © 2024, All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="common.js"></script>
+<script type="text/javascript">
+    if (localStorage.getItem("message") !== null) {
+        toastr.warning(localStorage.getItem("message"));
+        localStorage.removeItem("message");
+    } else if (localStorage.getItem("logout") !== null) {
+        toastr.success(localStorage.getItem("logout"));
+        localStorage.removeItem("logout");
+    }
+
+    let token = localStorage.getItem("token");
+
+    if (token == null) {
+        localStorage.clear();
+        document.getElementById("lnk-logout").hidden = true;
+        document.getElementById("lnk-login").hidden = false;
+    } else {
+        document.getElementById("lnk-login").hidden = true;
+        document.getElementById("lnk-logout").hidden = false;
+    }
+
+    let atobToken = atob(token.substring(4));
+    token = JSON.parse(atobToken);
+
+    function hasAccessTo(page) {
+        if (token === null) {
+            toastr.warning("You must be logged in to access this page!");
+            return;
+        }
+        if (token.role === "GBO" && page === "delete-user.html") {
+            toastr.warning("You do not have permission to access this page!");
+            return;
+        }
+        window.location.href = page;
+    }
+</script>
+</body>
+</html>
